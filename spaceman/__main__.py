@@ -35,7 +35,7 @@ def get_ssh_client(node):
 
 
 def get_ftp_client(node):
-    ftp_client = get_ssh_client(**node).open_sftp()
+    ftp_client = get_ssh_client(node).open_sftp()
     return ftp_client
 
 
