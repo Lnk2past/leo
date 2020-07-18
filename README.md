@@ -13,7 +13,7 @@ nodes:
     username: 'pi'
 ```
 
-The keys for each entry of `nodes` are the parameters specified by [`paramiko.client.SSHClient.connect'](http://docs.paramiko.org/en/stable/api/client.html#paramiko.client.SSHClient.connect) method. Any configuration you want to do locally with SSH keys, authorized_keys, etc. is up to you.
+The keys for each entry of `nodes` are the parameters specified by [`paramiko.client.SSHClient.connect`](http://docs.paramiko.org/en/stable/api/client.html#paramiko.client.SSHClient.connect) method. Any configuration you want to do locally with SSH keys, authorized_keys, etc. is up to you.
 
 This tool is not complete and is far from it.
 
