@@ -1,0 +1,8 @@
+*.pyc
+__pycache__
+
+build
+dist
+spaceman.egg-info
+
+.vscode/settings.json
