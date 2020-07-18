@@ -23,7 +23,7 @@ def spaceman_configuration(path):
 
 def parse_inputs():
     parser = argparse.ArgumentParser('spaceman')
-    parser.add_argument('--configuration', default='.spaceman/config.yml', type=spaceman_configuration)
+    parser.add_argument('-c', '--configuration', default='.spaceman/config.yml', type=spaceman_configuration)
     parser.add_argument('-d', '--directory')
 
     action_parser = argparse.ArgumentParser('spaceman')

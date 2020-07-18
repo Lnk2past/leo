@@ -16,6 +16,8 @@ nodes:
     user: 'pi'
 ```
 
+`spaceman` by default will look for a configuration file relative to your current location: `.spaceman/config.yml`. If a file cannot be found, it will look in `~/.spaceman/config.yml`. Alternatively you can specify a path to a configuration using the `-c / --configuration` option. This will be expanded on in the future to allow for multiple "profiles" in a single config.
+
 The keys for each entry of `nodes` are the parameters specified by [`fabric.connection.Connection`](https://docs.fabfile.org/en/2.5/api/connection.html#fabric.connection.Connection) (of the wonderful [`fabric`](https://github.com/fabric/fabric)) library. Any configuration you want to do locally with SSH keys, authorized_keys, etc. is up to you. If you are not familiar (as I was merely 10 hours ago) `fabric` is an awesome wrapper around [`paramiko`](https://github.com/paramiko/paramiko) and some other tools, and it is so easy and clean to use. Check out both of those libraries.
 
 This tool is not complete and is far from it.
