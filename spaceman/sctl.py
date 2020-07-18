@@ -24,6 +24,7 @@ def spaceman_configuration(path):
 def parse_inputs():
     parser = argparse.ArgumentParser('spaceman')
     parser.add_argument('--configuration', default='.spaceman/config.yml', type=spaceman_configuration)
+    parser.add_argument('-d', '--directory')
 
     action_parser = argparse.ArgumentParser('spaceman')
     action_subparsers = action_parser.add_subparsers(required=True, dest='action')
@@ -49,9 +50,12 @@ def parse_inputs():
 
 def sctl():
     inputs = parse_inputs()
+    inputs.configuration.setdefault('directory', inputs.directory)
+    directory = inputs.directory if inputs.directory else inputs.configuration['directory'] if 'directory' in inputs.configuration else None
+
     for node in inputs.configuration['nodes']:
         cnx = fabric.Connection(**node)
-        with cnx.cd(inputs.configuration['directory']) if 'directory' in inputs.configuration else contextlib.nullcontext():
+        with cnx.cd(directory) if directory else contextlib.nullcontext():
             if inputs.action == 'exec':
                 logger.info(f'Executing on {node}')
                 result = cnx.run(inputs.command)
