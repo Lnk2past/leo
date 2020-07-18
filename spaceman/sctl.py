@@ -11,23 +11,40 @@ logger = logging.getLogger('spaceman')
 logger.setLevel(logging.INFO)
 
 
+def spaceman_configuration(path):
+    try:
+        return yaml.load(open(path), Loader=yaml.FullLoader)
+    except FileNotFoundError:
+        try:
+            return yaml.load(open('~/.spaceman/config.yml'), Loader=yaml.FullLoader)
+        except FileNotFoundError:
+            raise argparse.ArgumentError('No configuration can be found!')
+
+
 def parse_inputs():
     parser = argparse.ArgumentParser('spaceman')
-    parser.add_argument('--configuration', default='default.yml', type=lambda p: yaml.load(open(p), Loader=yaml.FullLoader))
+    parser.add_argument('--configuration', default='.spaceman/config.yml', type=spaceman_configuration)
 
-    subparsers = parser.add_subparsers(dest='action')
-    exec_parser = subparsers.add_parser('exec')
+    action_parser = argparse.ArgumentParser('spaceman')
+    action_subparsers = action_parser.add_subparsers(required=True, dest='action')
+
+    exec_parser = action_subparsers.add_parser('exec')
     exec_parser.add_argument('command', help='command to execute')
 
-    download_parser = subparsers.add_parser('download')
+    download_parser = action_subparsers.add_parser('download')
     download_parser.add_argument('remote', help='remote path')
     download_parser.add_argument('local', nargs='?', default=None, help='local path')
 
-    upload_parser = subparsers.add_parser('upload')
+    upload_parser = action_subparsers.add_parser('upload')
     upload_parser.add_argument('local', help='local path')
     upload_parser.add_argument('remote', nargs='?', default=None, help='remote path')
 
-    return parser.parse_args()
+    args, extras = parser.parse_known_args()
+    if extras and extras[0] in ['exec','download', 'upload']:
+        return action_parser.parse_args(extras, namespace=args)
+
+    extras.insert(0, 'exec')
+    return action_parser.parse_args(extras, namespace=args)
 
 
 def sctl():

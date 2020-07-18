@@ -42,7 +42,11 @@ python -m pip install git+https://github.com/Lnk2past/spaceman.git
 
 ## Sample Usage
 
-Run `ls` on each node and print the output:
+Run `ls` on each node and print the output (the default action is `exec` and may be omitted):
+
+```shell
+sctl ls
+```
 
 ```shell
 sctl exec ls
