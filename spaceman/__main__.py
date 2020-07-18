@@ -1,6 +1,11 @@
 import argparse
+import logging
 import paramiko
 import yaml
+
+logging.basicConfig()
+logger = logging.getLogger('spaceman_application')
+logger.setLevel(logging.INFO)
 
 
 def parse_inputs():
@@ -30,10 +35,7 @@ def get_ssh_client(node):
 
 
 def get_ftp_client(node):
-    ssh_client = paramiko.SSHClient()
-    ssh_client.load_system_host_keys()
-    ssh_client.connect(**node)
-    ftp_client = ssh_client.open_sftp()
+    ftp_client = get_ssh_client(**node).open_sftp()
     return ftp_client
 
 
@@ -41,20 +43,21 @@ def main():
     inputs = parse_inputs()
     if inputs.action == 'exec':
         for node in inputs.configuration['nodes']:
-            print(f'Executing on {node}')
-            ssh_client = get_client(node)
+            logger.info(f'Executing on {node}')
+            ssh_client = get_ssh_client(node)
             stdin, stdout, stderr = ssh_client.exec_command(inputs.command)
-            print(stdout.read().decode())
-            print(stderr.read().decode())
+            logger.info(stdout.read().decode())
+            if stderr:=stderr.read().decode():
+                logger.error(stderr)
     elif inputs.action == 'download':
         for node in inputs.configuration['nodes']:
-            print(f'Downloading from {node}')
+            logger.info(f'Downloading from {node}')
             ftp_client = get_ftp_client(node)
             ftp_client.get(inputs.src, f'{node["hostname"]}.{inputs.dest}')
             ftp_client.close()
     elif inputs.action == 'upload':
         for node in inputs.configuration['nodes']:
-            print(f'Uploading to {node}')
+            logger.info(f'Uploading to {node}')
             ftp_client = get_ftp_client(node)
             ftp_client.put(inputs.src, inputs.dest)
             ftp_client.close()
