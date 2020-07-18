@@ -3,6 +3,7 @@ import logging
 import paramiko
 import yaml
 
+
 logging.basicConfig()
 logger = logging.getLogger('spaceman_application')
 logger.setLevel(logging.INFO)
@@ -29,7 +30,7 @@ def parse_inputs():
 
 def get_ssh_client(node):
     ssh_client = paramiko.SSHClient()
-    ssh_client.load_system_host_keys()
+    ssh_client.load_system_host_keys(ssh_client.AutoAddPolicy())
     ssh_client.connect(**node)
     return ssh_client
 
@@ -61,6 +62,7 @@ def main():
             ftp_client = get_ftp_client(node)
             ftp_client.put(inputs.src, inputs.dest)
             ftp_client.close()
+
 
 if __name__ == '__main__':
     main()
