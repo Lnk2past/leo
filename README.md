@@ -17,11 +17,11 @@ The keys for each entry of `nodes` are the parameters specified by [`paramiko.cl
 
 This tool is not complete and is far from it.
 
-## Install
+# Install
 
 I will eventually get around to making this into a usable package. For now install it yourself.
 
-### Basic
+## Basic
 
 Clone this repository and then run:
 
@@ -29,10 +29,38 @@ Clone this repository and then run:
 python setup.py install
 ```
 
-### Directly From GitHub
+## Directly From GitHub
 
 Install with pip directly from GitHub:
 
 ```shell
 python -m pip install git+https://github.com/Lnk2past/spaceman.git
+```
+
+# Sample Usage
+
+Run `ls` on each node and print the output:
+
+```shell
+sctl exec ls
+```
+
+Download the `.bashrc` from each node:
+
+```shell
+sctl download .bashrc .bashrc
+```
+
+Upload a new `.bashrc` to each node:
+
+```shell
+sctl upload .bashrc .bashrc
+```
+
+## Caveats
+
+Paramiko's SSHClient will open channels to a default directory (the home directory of the user), and so command by default will be run from that directory. If you need to run a command in a separate directory then you need to chain the commands as one:
+
+```shell
+sctl exec "cd Documents/spaceman && git pull"
 ```
