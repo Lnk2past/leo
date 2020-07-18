@@ -10,7 +10,7 @@ logger.setLevel(logging.INFO)
 
 def parse_inputs():
     parser = argparse.ArgumentParser('spaceman')
-    parser.add_argument('--configuration', default='test.yml', type=lambda p: yaml.load(open(p), Loader=yaml.FullLoader))
+    parser.add_argument('--configuration', default='default.yml', type=lambda p: yaml.load(open(p), Loader=yaml.FullLoader))
 
     subparsers = parser.add_subparsers(dest='action')
     exec_parser = subparsers.add_parser('exec')
