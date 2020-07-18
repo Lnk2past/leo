@@ -5,23 +5,26 @@
 Sample configuration file:
 
 ```yaml
+directory: /
 nodes:
-  - hostname: 'some_host'
-    username: 'root'
-    password: 'password'
-  - hostname: 'mypi'
-    username: 'pi'
+  - host: 'some_host'
+    user: 'root'
+    connect_kwargs: {
+      password: password
+    }
+  - host: 'mypi'
+    user: 'pi'
 ```
 
-The keys for each entry of `nodes` are the parameters specified by [`paramiko.client.SSHClient.connect`](http://docs.paramiko.org/en/stable/api/client.html#paramiko.client.SSHClient.connect) method. Any configuration you want to do locally with SSH keys, authorized_keys, etc. is up to you.
+The keys for each entry of `nodes` are the parameters specified by [`fabric.connection.Connection`](https://docs.fabfile.org/en/2.5/api/connection.html#fabric.connection.Connection) (of the wonderful [`fabric`](https://github.com/fabric/fabric)) library. Any configuration you want to do locally with SSH keys, authorized_keys, etc. is up to you. If you are not familiar (as I was merely 10 hours ago) `fabric` is an awesome wrapper around [`paramiko`](https://github.com/paramiko/paramiko) and some other tools, and it is so easy and clean to use. Check out both of those libraries.
 
 This tool is not complete and is far from it.
 
-# Install
+## Install
 
 I will eventually get around to making this into a usable package. For now install it yourself.
 
-## Basic
+### Basic
 
 Clone this repository and then run:
 
@@ -29,7 +32,7 @@ Clone this repository and then run:
 python setup.py install
 ```
 
-## Directly From GitHub
+### Directly From GitHub
 
 Install with pip directly from GitHub:
 
@@ -37,7 +40,7 @@ Install with pip directly from GitHub:
 python -m pip install git+https://github.com/Lnk2past/spaceman.git
 ```
 
-# Sample Usage
+## Sample Usage
 
 Run `ls` on each node and print the output:
 
@@ -48,19 +51,15 @@ sctl exec ls
 Download the `.bashrc` from each node:
 
 ```shell
-sctl download .bashrc .bashrc
+sctl download .bashrc
 ```
 
 Upload a new `.bashrc` to each node:
 
 ```shell
-sctl upload .bashrc .bashrc
+sctl upload .bashrc
 ```
 
-## Caveats
+### Notes
 
-Paramiko's SSHClient will open channels to a default directory (the home directory of the user), and so command by default will be run from that directory. If you need to run a command in a separate directory then you need to chain the commands as one:
-
-```shell
-sctl exec "cd Documents/spaceman && git pull"
-```
+You may omit specifying a `directory` in your configuration; in these cases the default directory is usually the home directory of the user you are logging in as.
