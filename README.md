@@ -24,19 +24,19 @@ This tool is not complete and is far from it.
 
 ## Install
 
-I will eventually get around to making this into a usable package. For now install it yourself.
+Install via pip:
 
-### Basic
+```shell
+pip install sctl
+```
 
-Clone this repository and then run:
+Or for latest and greatest, clone this repository and then run:
 
 ```shell
 python setup.py install
 ```
 
-### Directly From GitHub
-
-Install with pip directly from GitHub:
+or install directly from GitHub with pip:
 
 ```shell
 python -m pip install git+https://github.com/Lnk2past/space-control.git
