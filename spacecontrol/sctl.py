@@ -7,26 +7,26 @@ import yaml
 
 
 logging.basicConfig()
-logger = logging.getLogger('spaceman')
+logger = logging.getLogger('sctl')
 logger.setLevel(logging.INFO)
 
 
-def spaceman_configuration(path):
+def sctl_configuration(path):
     try:
         return yaml.load(open(path), Loader=yaml.FullLoader)
     except FileNotFoundError:
         try:
-            return yaml.load(open('~/.spaceman/config.yml'), Loader=yaml.FullLoader)
+            return yaml.load(open('~/.sctl/config.yml'), Loader=yaml.FullLoader)
         except FileNotFoundError:
             raise argparse.ArgumentError('No configuration can be found!')
 
 
 def parse_inputs():
-    parser = argparse.ArgumentParser('spaceman')
-    parser.add_argument('-c', '--configuration', default='.spaceman/config.yml', type=spaceman_configuration)
+    parser = argparse.ArgumentParser('sctl')
+    parser.add_argument('-c', '--configuration', default='.sctl/config.yml', type=sctl_configuration)
     parser.add_argument('-d', '--directory')
 
-    action_parser = argparse.ArgumentParser('spaceman')
+    action_parser = argparse.ArgumentParser('sctl')
     action_subparsers = action_parser.add_subparsers(required=True, dest='action')
 
     exec_parser = action_subparsers.add_parser('exec')

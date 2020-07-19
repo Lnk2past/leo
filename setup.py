@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 about = {}
 here = os.path.abspath(os.path.dirname(__file__))
-with open(os.path.join(here, 'spaceman', '__version__.py'), 'r') as f:
+with open(os.path.join(here, 'spacecontrol', '__version__.py'), 'r') as f:
     exec(f.read(), about)
 
 with open('README.md', 'r') as f:
@@ -25,7 +25,7 @@ setup(
     install_requires=install_requires,
     entry_points={
         'console_scripts': [
-            'sctl=spaceman.__main__:main'
+            'sctl=spacecontrol.__main__:main'
         ]
     }
 )

@@ -3,6 +3,7 @@ __pycache__
 
 build
 dist
-spaceman.egg-info
+spacecontrol.egg-info
+sctl.egg-info
 
 .vscode/settings.json

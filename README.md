@@ -1,6 +1,6 @@
-# spaceman
+# space-control
 
-`spaceman` is a simple CLI tool for working within a distributed environment. The goal is to allow batch operations to be easily executed on any number of hosts, whether that means executing commands, downloading or uploading files, or whatever else is needed.
+`space-control`, or `sctl`, is a simple CLI tool for working within a distributed environment. The goal is to allow batch operations to be easily executed on any number of hosts, whether that means executing commands, downloading or uploading files, or whatever else is needed.
 
 Sample configuration file:
 
@@ -16,7 +16,7 @@ nodes:
     user: 'pi'
 ```
 
-`spaceman` by default will look for a configuration file relative to your current location: `.spaceman/config.yml`. If a file cannot be found, it will look in `~/.spaceman/config.yml`. Alternatively you can specify a path to a configuration using the `-c / --configuration` option. This will be expanded on in the future to allow for multiple "profiles" in a single config.
+`sctl` by default will look for a configuration file relative to your current location: `.sctl/config.yml`. If a file cannot be found, it will look in `~/.sctl/config.yml`. Alternatively you can specify a path to a configuration using the `-c / --configuration` option. This will be expanded on in the future to allow for multiple "profiles" in a single config.
 
 The keys for each entry of `nodes` are the parameters specified by [`fabric.connection.Connection`](https://docs.fabfile.org/en/2.5/api/connection.html#fabric.connection.Connection) (of the wonderful [`fabric`](https://github.com/fabric/fabric)) library. Any configuration you want to do locally with SSH keys, authorized_keys, etc. is up to you. If you are not familiar (as I was merely 10 hours ago) `fabric` is an awesome wrapper around [`paramiko`](https://github.com/paramiko/paramiko) and some other tools, and it is so easy and clean to use. Check out both of those libraries.
 
@@ -39,7 +39,7 @@ python setup.py install
 Install with pip directly from GitHub:
 
 ```shell
-python -m pip install git+https://github.com/Lnk2past/spaceman.git
+python -m pip install git+https://github.com/Lnk2past/space-control.git
 ```
 
 ## Sample Usage

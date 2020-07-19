@@ -1,5 +1,5 @@
 import sys
-from spaceman import sctl
+from spacecontrol import sctl
 
 
 def main():
