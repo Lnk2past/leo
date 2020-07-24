@@ -38,7 +38,7 @@ def parse_inputs():
     if extras and extras[0] in ['exec','download', 'upload']:
         return action_parser.parse_args(extras, namespace=args)
 
-    if 'commands' in args.configuration and extras and extras[0] in args.configuration['commands']:
+    if 'actions' in args.configuration and extras and extras[0] in args.configuration['actions']:
         args.action = extras[0]
         return args
 

@@ -78,7 +78,7 @@ You may omit specifying a `directory` in your configuration; in these cases the 
 nodes:
   - host: 'somehost'
     user: 'root'
-commands:
+actions:
   pgdump:
     - action: 'exec'
       command: 'docker exec postgres pg_dump -f pg_data.txt -t my_table my_db'
