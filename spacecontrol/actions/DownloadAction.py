@@ -10,7 +10,7 @@ class DownloadAction:
 
     def __call__(self, connection):
         logger_format_fields['host'] = connection.host
-        with cnx.cd(self.directory) if self.directory else contextlib.nullcontext():
+        with connection.cd(self.directory) if self.directory else contextlib.nullcontext():
             logger.critical(f'Downloading: "{self.remote}"', extra=logger_format_fields)
             result = connection.get(self.remote, self.local)
             logger.debug(f'Downloaded: "{result.local}"', extra=logger_format_fields)
