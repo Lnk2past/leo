@@ -1,6 +1,6 @@
 __title__ = 'sctl'
 __description__ = 'A simple development environment manager.'
 __url__ = 'https://github.com/Lnk2past/space-control'
-__version__ = '2020.0.0'
+__version__ = '2020.0.1'
 __author__ = 'Lnk2past'
 __license__ = 'MIT'
