@@ -25,11 +25,11 @@ def sctl():
     else:
         def baction(action, actions_list):
             if action['action'] == 'exec':
-                actions_list.append(ExecAction(action['command']))
+                actions_list.append(ExecAction(action['command'], directory=directory))
             elif action['action'] == 'download':
-                actions_list.append(DownloadAction(action['remote'], action.get('local', None)))
+                actions_list.append(DownloadAction(action['remote'], action.get('local', None), directory=directory))
             elif action['action'] == 'upload':
-                actions_list.append(UploadAction(action['local'], action.get('remote', None)))
+                actions_list.append(UploadAction(action['local'], action.get('remote', None), directory=directory))
 
         for action in inputs.configuration['actions'][inputs.action]:
             baction(action, actions)
