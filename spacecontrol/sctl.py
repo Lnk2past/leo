@@ -31,7 +31,7 @@ def sctl():
             elif action['action'] == 'upload':
                 actions_list.append(UploadAction(action['local'], action.get('remote', None)))
 
-        for action in inputs.configuration['commands'][inputs.action]:
+        for action in inputs.configuration['actions'][inputs.action]:
             baction(action, actions)
 
     nodes = [node for node in inputs.configuration['nodes'] if inputs.nodes.match(node['host'])]
