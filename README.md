@@ -69,3 +69,45 @@ sctl upload .bashrc
 ### Notes
 
 You may omit specifying a `directory` in your configuration; in these cases the default directory is usually the home directory of the user you are logging in as.
+
+## Configurable Actions
+
+`space-control` refers to executing commands and transferring files as *actions*. While you can certainly specify actions directly on the CLI (as shown above), you can also provide custom sets of actions in your configuration file. The added benefit here is that configurable actions are designed to allow you to chain multiple actions together (something you cannot do directly with the CLI). So for example, you can upload a file, run a command to produce a new file, and download that new file all by configuring a single set of actions.
+
+```yaml
+nodes:
+  - host: 'somehost'
+    user: 'root'
+commands:
+  pgdump:
+    - action: 'exec'
+      command: 'docker exec postgres pg_dump -f pg_data.txt -t my_table my_db'
+    - action: 'exec'
+      command: 'docker cp postgres:pg_data.txt pg_data.txt'
+    - action: 'download'
+      remote: 'pg_data.txt'
+```
+
+The custom action `pgdump` here will execute `pg_dump` within the `postgres` container, copy the file from the `postgres` container, and then download it locally.
+
+## Filtering Nodes
+
+Sometimes you may want to run an action on specific nodes in your configuration. This can be done using the `-n` / `--nodes` input options. This option takes a regex pattern and will filter nodes on that pattern. For example, given the following config:
+
+```yaml
+nodes:
+  - host: 'foo'
+    user: 'root'
+  - host: 'bar'
+    user: 'root'
+  - host: 'foobar'
+    user: 'root'
+```
+
+We can run an action against the `foo` and `foobar` nodes only using:
+
+```shell
+sctl -n foo ls
+```
+
+Here the pattern `foo` will be partial matches for both `foo` and `foobar` and will both be included in the set of nodes to run against.
